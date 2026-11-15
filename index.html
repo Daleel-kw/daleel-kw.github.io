@@ -451,7 +451,9 @@ body.hc .discover,body.hc .dock button#booksDock{background:#000;color:#fff}
 <script src="data.js"></script>
 <script>
 (function(){
-const H=window.HALLS, P=window.PUBS, ENT=window.ENT||{}, CORR=window.CORR||{};
+const H=window.HALLS, P=window.PUBS, ENT=window.ENT||{}, CORR=window.CORR||{}, FLOOR=window.FLOOR||{}, OBST=window.OBST||{};
+function inPoly(x,y,pg){let c=false;for(let i=0,j=pg.length-1;i<pg.length;j=i++){const [xi,yi]=pg[i],[xj,yj]=pg[j];if(((yi>y)!==(yj>y))&&(x<(xj-xi)*(y-yi)/(yj-yi)+xi))c=!c}return c}
+function polyEdge(x,y,pg){let d=1e9;for(let i=0,j=pg.length-1;i<pg.length;j=i++)d=Math.min(d,distSeg(x,y,pg[j][0],pg[j][1],pg[i][0],pg[i][1]));return d}
 const HM={}; H.forEach(h=>HM[h.id]=h);
 const HALL_SHORT={h5:'قاعة 5',h6:'قاعة 6',h7:'قاعة 7',kids:'الطفل'};
 const HALL_EMO={h5:'📚',h6:'📖',h7:'🏛️',kids:'🧸'};
@@ -539,7 +541,7 @@ $('hcBtn').onclick=()=>{hc=!hc;applyView()};
 applyView();
 
 // ---------- stats ----------
-const countries=[...new Set(P.map(p=>p.c))];
+const countries=[...new Set(P.map(p=>p.c))].filter(c=>c!=='غير محدد');
 $('stats').innerHTML=`<span class="stat"><b>${P.length}</b> جهة مشاركة</span><span class="stat"><b>${H.length}</b> قاعات</span><span class="stat"><b>${countries.length}</b> دولة</span>`;
 
 // ---------- drawing ----------
@@ -547,7 +549,11 @@ function hallSVG(id,opts={}){
   const h=HM[id],[bx,by,bw,bh]=h.box; const mini=!!opts.mini;
   let s=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="${bx} ${by} ${bw} ${bh}" ${mini?'preserveAspectRatio="xMidYMid meet"':`width="${bw}" height="${bh}"`} id="${mini?'':'mapSvg'}">`;
   if(!mini) s+=`<defs><pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.6" fill="#e2d6c0"/></pattern></defs>`;
-  if(CORR[id]){const pts=CORR[id].map(p=>p.join(',')).join(' ');
+  if(FLOOR[id]){const pts=FLOOR[id].map(p=>p.join(',')).join(' ');
+    s+=`<polygon class="floor" points="${pts}" stroke-linejoin="round"/>`;
+    if(!mini) s+=`<polygon points="${pts}" fill="url(#dots)" opacity=".7"/>`;
+    (OBST[id]||[]).forEach(([cx,cy,r])=>{s+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="#9fb8a2" opacity=".85"/>`});
+  } else if(CORR[id]){const pts=CORR[id].map(p=>p.join(',')).join(' ');
     s+=`<polyline class="corrEdge" points="${pts}" stroke-width="${mini?150:150}"/><polyline class="corr" points="${pts}" stroke-width="${mini?144:144}"/>`;
     if(!mini) s+=`<polyline points="${pts}" fill="none" stroke="url(#dots)" stroke-width="140" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/>`;
     s+=`<circle cx="1105" cy="1130" r="150" class="floor" style="stroke-width:3"/><circle cx="1105" cy="1130" r="146" fill="var(--floor)"/>`;
@@ -694,7 +700,7 @@ function renderInfo(opt={}){
   if(tour){const k=tour.indexOf(cur); if(k>-1) tourHtml=`<div class="tour on"><button class="btn" id="tPrev" ${k===0?'disabled style="opacity:.4"':''}>→ السابق</button><span class="prog">المحطة ${k+1} من ${tour.length}</span><button class="btn pri" id="tNext">${k===tour.length-1?'إنهاء ✓':'التالي ←'}</button></div>`;}
   $('info').innerHTML=`<div class="grip"></div>
    ${opt.surprise?'<div class="ct" style="margin-bottom:8px">✨ مكتبة اكتشفناها لك — يمكن تلقى فيها كتابك الجاي</div>':''}
-   ${p.h==='kids'?'<div class="ct" style="margin-bottom:8px">🧸 هذي في صالة كتاب الطفل</div>':''}
+   ${p.h==='kids'?'<div class="ct" style="margin-bottom:8px">🧸 هذي في لوبي كتاب الطفل</div>':''}
    <div class="row"><div class="badge t-${p.h}"><b>${esc(p.b)}</b><span>${HM[p.h].name}</span></div>
    <div style="min-width:0"><div class="nm">${esc(p.n)}</div><div class="ct">${FLAGS[p.c]||''} ${esc(p.c)} · <span style="color:${r.s};font-weight:600">${r.n}</span></div></div></div>
    <div class="where">🧭 مكانها: ${HM[p.h].name}، ${whereText(p)}.<br>📍 جيرانها (بإطار ذهبي على الخريطة): ${nb}</div>
@@ -874,13 +880,14 @@ $('info').addEventListener('keydown',e=>{if(e.target.id==='qBook'&&e.key==='Ente
 
 // ---------- wayfinding ----------
 let way=null;
-const SCALE={h5:10,h6:11.3,h7:27.4,kids:9.5};   // map px per metre, from booth sizes on the official plans
+const SCALE=window.SCALE||{h5:10,h6:11.3,h7:27.4,kids:9.5};   // map px per metre, from booth sizes on the official plans
 const CELL=8, gridCache={};
 function distSeg(px,py,ax,ay,bx,by){const dx=bx-ax,dy=by-ay;const t=Math.max(0,Math.min(1,((px-ax)*dx+(py-ay)*dy)/(dx*dx+dy*dy||1)));return Math.hypot(px-ax-t*dx,py-ay-t*dy)}
 function grid(h){if(gridCache[h])return gridCache[h];
   const [bx,by,bw,bh]=HM[h].box,W=Math.ceil(bw/CELL),G=Math.ceil(bh/CELL),g=new Uint8Array(W*G),c=CORR[h];
   for(let y=0;y<G;y++)for(let x=0;x<W;x++){const px=bx+(x+.5)*CELL,py=by+(y+.5)*CELL;let f;
-    if(c){f=false;for(let i=0;i<c.length-1&&!f;i++)if(distSeg(px,py,c[i][0],c[i][1],c[i+1][0],c[i+1][1])<=66)f=true;
+    if(FLOOR[h]){const pg=FLOOR[h];f=inPoly(px,py,pg)&&polyEdge(px,py,pg)>=18&&!(OBST[h]||[]).some(([cx,cy,r])=>Math.hypot(px-cx,py-cy)<=r+8);}
+    else if(c){f=false;for(let i=0;i<c.length-1&&!f;i++)if(distSeg(px,py,c[i][0],c[i][1],c[i+1][0],c[i+1][1])<=66)f=true;
       if(!f)f=(px>=822&&px<=1180&&py>=192&&py<=418)||Math.hypot(px-1105,py-1130)<=140||(px>=1028&&px<=1168&&py>=380&&py<=460);}
     else f=px>bx+24&&px<bx+bw-24&&py>by+24&&py<by+bh-24;
     g[y*W+x]=f?1:0;}
@@ -892,7 +899,7 @@ function cellsNear(h,test){const {g,W,G,bx,by}=grid(h);const out=[];for(let y=0;
 function rectDist(px,py,r){const dx=Math.max(r[0]-px,0,px-(r[0]+r[2])),dy=Math.max(r[1]-py,0,py-(r[1]+r[3]));return Math.hypot(dx,dy)}
 function boothCells(h,p){for(const d of [16,26,40,60]){const c=cellsNear(h,(x,y)=>rectDist(x,y,p.r)<=d);if(c.length)return c}return[]}
 function pointCells(h,pt){for(const d of [12,24,40,70,110]){const c=cellsNear(h,(x,y)=>Math.hypot(x-pt[0],y-pt[1])<=d);if(c.length){c.sort((a,b)=>0);return c}}return[]}
-function astar(h,starts,goals,gx,gy){const {g,W,G}=grid(h);const N=W*G;const gs=new Float32Array(N).fill(Infinity),from=new Int32Array(N).fill(-1),goal=new Uint8Array(N);goals.forEach(i=>goal[i]=1);
+function astar(h,starts,goals,gx,gy){const {g,W,G}=grid(h);const N=W*G;const gs=new Float64Array(N).fill(Infinity),from=new Int32Array(N).fill(-1),goal=new Uint8Array(N);goals.forEach(i=>goal[i]=1);
   const heap=[];const push=(f,i)=>{heap.push([f,i]);let k=heap.length-1;while(k>0){const p=(k-1)>>1;if(heap[p][0]<=heap[k][0])break;[heap[p],heap[k]]=[heap[k],heap[p]];k=p}};
   const pop=()=>{const top=heap[0],last=heap.pop();if(heap.length){heap[0]=last;let k=0;for(;;){const l=2*k+1,r=l+1;let m=k;if(l<heap.length&&heap[l][0]<heap[m][0])m=l;if(r<heap.length&&heap[r][0]<heap[m][0])m=r;if(m===k)break;[heap[m],heap[k]]=[heap[k],heap[m]];k=m}}return top};
   const hf=i=>Math.hypot(i%W-gx,((i/W)|0)-gy);

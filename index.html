@@ -975,7 +975,7 @@ window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPro
 function showInstall(){let off=false;try{off=localStorage.getItem('daleel-install-off')==='1'}catch(e){}
   if(standalone||off||!/github\.io$/.test(location.hostname))return;
   const ios=/iphone|ipad|ipod/i.test(navigator.userAgent);
-  $('install').innerHTML=`<span style="font-size:1.6rem">📲</span><div><b>خلها على شاشة جوالك</b>تفتح مثل التطبيق، وتشتغل حتى لو النت ضعيف داخل القاعات.
+  $('install').innerHTML=`<span style="font-size:1.6rem">📲</span><div><b>خلها على شاشة تلفونك</b>تفتح مثل التطبيق، وتشتغل حتى لو النت ضعيف داخل القاعات.
     ${deferredPrompt?'<br><button class="ins" id="insBtn">ثبّتها الحين</button>':ios?'<br>اضغط زر المشاركة <b style="display:inline">⬆️</b> تحت، بعدين «إضافة إلى الشاشة الرئيسية».':''}</div><button class="x" id="insX" aria-label="إغلاق">✕</button>`;
   $('install').hidden=false;
   $('insX').onclick=()=>{$('install').hidden=true;try{localStorage.setItem('daleel-install-off','1')}catch(e){}};

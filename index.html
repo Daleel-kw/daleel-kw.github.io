@@ -527,7 +527,8 @@ html,body{overflow-x:clip}
 #bgfx,#fxTop{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none}
 #fxTop{z-index:45}
 .wrap{position:relative;z-index:1}
-body.hc #bgfx,body.hc .ticker,body.hc .ghost{display:none}
+body.hc #bgfx,body.hc #fxTop,body.hc .ticker,body.hc .ghost{display:none}
+body.hc *{animation:none!important}
 /* شريط «نقرأ ونرتقي» المتحرك */
 .ticker{margin:0 calc(50% - 50vw);background:var(--green);color:var(--cream2);overflow:hidden;white-space:nowrap;position:relative;z-index:2;border-block:0;direction:ltr}
 .ticker .tk{display:inline-flex;align-items:center;gap:22px;padding:9px 0;animation:tick 38s linear infinite;font-family:Momken,URW,serif;font-size:1.35rem}

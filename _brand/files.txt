@@ -1,0 +1,23 @@
+fair-asset-1-ef6ba310-70f8-4d89-8754-d6acb6912e8c: PNG image data, 2892 x 3942, 8-bit/color RGBA, non-interlaced
+fair-asset-2-9f100615-10d3-42d2-ace2-8170850ce899: PNG image data, 1419 x 1174, 8-bit/color RGBA, non-interlaced
+fair-asset-3-93680bdc-9f81-433f-9007-01bb79bba9d7: PNG image data, 1828 x 1147, 8-bit/color RGBA, non-interlaced
+fair-asset-4-d2c4878d-3577-4000-a77b-0ead2bbb4f77: PNG image data, 362 x 272, 8-bit/color RGBA, non-interlaced
+fair-asset-5-b3e8a485-9f03-444e-a825-1cd34408ad7e: PNG image data, 506 x 760, 8-bit/color RGBA, non-interlaced
+fair-asset-6-521b4d0e-a1f6-4c89-bb45-c96fa3a5a434: PNG image data, 351 x 281, 8-bit/color RGBA, non-interlaced
+fair-asset-7-bcf5e986-7cf0-4ca3-880a-c577d8562bca: PNG image data, 739 x 1109, 8-bit/color RGBA, non-interlaced
+fair-asset-8-48c9ae4b-21ff-41b7-993b-fe2dff3bb277: PNG image data, 384 x 256, 8-bit/color RGBA, non-interlaced
+fair-asset-9-3d2be913-6094-477d-916d-ba2080f29c40: PNG image data, 384 x 256, 8-bit/color RGBA, non-interlaced
+fair-diamonds-green.png:                           PNG image data, 834 x 1645, 8-bit/color RGBA, non-interlaced
+fair-diamonds-red.png:                             PNG image data, 1523 x 772, 8-bit/color RGBA, non-interlaced
+fair-home.html:                                    HTML document, ASCII text, with very long lines (1337), with CRLF, LF line terminators
+fair-pattern-green.png:                            PNG image data, 2048 x 1448, 8-bit/color RGBA, non-interlaced
+fair-qatar-map.svg:                                SVG Scalable Vector Graphics image, ASCII text, with very long lines (3854)
+fair-quote-cream-close.png:                        PNG image data, 738 x 1108, 8-bit/color RGBA, non-interlaced
+fair-quote-red-close.png:                          PNG image data, 506 x 759, 8-bit/color RGBA, non-interlaced
+nccal-favicon.svg:                                 SVG Scalable Vector Graphics image, ASCII text, with very long lines (2982)
+nccal-home.html:                                   HTML document, ASCII text, with very long lines (444)
+nccal-logo-color.svg:                              SVG Scalable Vector Graphics image, ASCII text, with very long lines (31459)
+nccal-logo-white.png:                              PNG image data, 1800 x 2200, 8-bit/color RGBA, non-interlaced
+nccal-pattern-1.svg:                               SVG Scalable Vector Graphics image, ASCII text
+nccal-reveal-logo.svg:                             SVG Scalable Vector Graphics image, ASCII text, with very long lines (2982)
+nccal-shape-pattern.svg:                           SVG Scalable Vector Graphics image, ASCII text, with very long lines (899)

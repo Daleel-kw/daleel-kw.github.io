@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-180.png">
-<meta name="theme-color" content="#7c5cff">
+<meta name="theme-color" content="#2c645b">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="دليل">
 <title>دليل — معرض الكويت الدولي للكتاب</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Lalezar&display=swap" rel="stylesheet">
+<link rel="preload" href="fonts/URWGeometricArabic-Medium.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="preload" href="fonts/Momken-Regular.otf" as="font" type="font/otf" crossorigin>
 <style>
 :root{
   --paper:#f4efe6; --card:#fffdf8; --ink:#1d2624; --muted:#5f655f; --line:#e3d9c7;
@@ -343,23 +343,156 @@ body.hc .viewport{background:#eee}
 .mbox textarea{width:100%;font:inherit;font-size:.8rem;direction:ltr;border-radius:12px;border:2px solid var(--line);padding:8px;min-height:70px}
 body.hc .discover,body.hc .dock button#booksDock{background:#000;color:#fff}
 
+/* ================= THEME: معرض الكويت الدولي للكتاب 49 — هوية المجلس الوطني ================= */
+@font-face{font-family:Momken;src:url(fonts/Momken-Regular.otf) format('opentype');font-weight:400;font-display:swap}
+@font-face{font-family:URW;src:url(fonts/URWGeometricArabic-Medium.ttf) format('truetype');font-weight:400 500;font-display:swap}
+@font-face{font-family:URW;src:url(fonts/URWGeometricArabic-SemiBold.ttf) format('truetype');font-weight:600 700;font-display:swap}
+@font-face{font-family:URW;src:url(fonts/URWGeometricArabic-Heavy.ttf) format('truetype');font-weight:800 900;font-display:swap}
+:root{--paper:#f8f4ed;--card:#fffdf8;--ink:#203b35;--muted:#59675c;--line:#d8d0c2;
+  --green:#2c645b;--green2:#3e776c;--maroon:#c9382a;--gold:#e8a24a;--floor:#fffdf8;--floor2:#e4d8c5;
+  --red:#c9382a;--cream:#e4d8c5;--blue:#2d4f63;--amber:#e8a24a;--goldsoft:#e5b36a;
+  --shadow:0 10px 26px -16px rgba(32,59,53,.45)}
+html,body{font-family:URW,"IBM Plex Sans Arabic",Tahoma,sans-serif}
+body:not(.hc){background:var(--paper)}
+h1,.sect,.bar h2,.vh,.mbox h3{font-family:Momken,URW,serif!important;font-weight:400!important}
+/* top strip */
+.topstrip{background:var(--green);color:#f8f4ed;margin:0 calc(50% - 50vw);padding:8px max(16px,calc(50vw - 424px));display:flex;align-items:center;gap:10px;font-size:.82rem}
+.topstrip img{height:34px;width:auto}
+.topstrip span{flex:1;line-height:1.4}
+.a11y button{background:var(--card);box-shadow:none;border:1px solid var(--line);color:var(--ink);border-radius:8px}
+.a11y button.on{background:var(--ink);color:#f8f4ed}
+/* hero */
+.hero{padding:18px 0 8px}
+.brand{align-items:center;gap:14px}
+.brand .fairlogo{width:66px;height:auto;flex:none}
+h1{background:none;-webkit-background-clip:initial;background-clip:initial;color:var(--green);font-size:3.4rem;line-height:1.05;letter-spacing:0}
+h1 span{color:var(--red)}
+.kicker{display:flex;align-items:center;gap:8px;color:var(--green);font-weight:600;font-size:.9rem;margin-bottom:2px}
+.dia{display:inline-flex;gap:3px}.dia i{width:9px;height:9px;background:var(--red);transform:rotate(45deg);display:block}
+.sub{color:var(--muted);font-size:1rem;line-height:1.7}
+.deco{display:none}
+.stat{background:var(--card);border:1px solid var(--line);box-shadow:none;border-radius:8px;color:var(--muted)}
+.stat:nth-child(1) b{color:var(--green)}.stat:nth-child(2) b{color:var(--red)}.stat:nth-child(3) b{color:var(--blue)}
+.discover{border-radius:10px;background:var(--red);box-shadow:0 10px 20px -12px rgba(201,56,42,.9);animation:none;font-weight:700}
+.discover.alt{background:var(--green);box-shadow:0 10px 20px -12px rgba(44,100,91,.9)}
+.install{background:var(--card);border:1px solid var(--line);box-shadow:none;border-radius:10px}
+.install .x{background:var(--paper)}
+.install .ins{background:var(--green);border-radius:8px}
+/* section titles */
+.sect{color:var(--green);font-size:1.7rem;margin-top:26px}
+.sect::after{width:auto;height:auto;background:none;border-radius:0;content:"◆◆";color:var(--red);font-size:.7rem;letter-spacing:2px;display:block;margin-top:0;font-family:Tahoma,sans-serif}
+/* hall cards */
+.hallcard{border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);background:var(--card)!important}
+.hallcard::before{height:6px}
+.hallcard[data-hall="h5"]::before{background:var(--green)}
+.hallcard[data-hall="h6"]::before{background:var(--red)}
+.hallcard[data-hall="h7"]::before{background:var(--blue)}
+.hallcard.kids::before{background:var(--amber)}
+.hallcard b{color:var(--ink)}
+.hallcard:hover{transform:translateY(-2px)}
+/* search */
+.searchbox{background:linear-gradient(var(--paper) 80%,transparent)}
+.field{background:var(--card);border:2px solid var(--green);border-radius:10px;box-shadow:var(--shadow)}
+.field:focus-within{border-color:var(--red)}
+.field>svg{color:var(--green)}
+.surprise{background:var(--green);border-radius:8px;box-shadow:none}
+.chip{box-shadow:none;border:1px solid var(--line);background:var(--card);border-radius:8px;font-weight:600}
+.chip.on{background:var(--green);border-color:var(--green);color:#fff}
+.chips.countries .chip.on{background:var(--red);border-color:var(--red)}
+.tags .chip{background:var(--card);border:1px solid var(--goldsoft)}
+.tags .chip.on{background:var(--amber);border-color:var(--amber);color:var(--ink)}
+.hint{background:#f3ead9;border-color:var(--amber);color:var(--ink);border-radius:10px}
+/* results */
+.item{border:1px solid var(--line);border-radius:10px;box-shadow:none;background:var(--card)}
+.item:hover{transform:none;border-color:var(--green2)}
+.tag{border-radius:8px}
+.t-h5{background:var(--green)}.t-h6{background:var(--red)}.t-h7{background:var(--blue)}.t-kids{background:#b8742a}
+.name mark{background:#f1d9a8}
+.star.on{color:var(--amber)}
+.more{border-radius:8px;color:var(--green)}
+footer{color:var(--muted)}
+.foot-logos{display:flex;justify-content:center;align-items:center;gap:22px;margin-bottom:10px}
+.foot-logos img{height:64px;width:auto}
+/* dock */
+.dock button{background:var(--green);border-radius:10px}
+.dock button#booksDock{background:var(--red)}
+.dock .cnt{background:var(--goldsoft);color:var(--ink)}
+/* sheets */
+.bar{background:var(--card);border-bottom:1px solid var(--line)}
+.bar h2{color:var(--green);font-size:1.5rem}
+.icon{background:var(--paper);color:var(--green);border-radius:8px;border:1px solid var(--line)}
+/* map (layout unchanged, colors only) */
+.viewport{background:#ece5d8}
+.floor{fill:var(--floor);stroke:#cfc3ad;stroke-width:4}
+.bt.sel rect{fill:var(--red)!important}
+.bt.nb rect{stroke:var(--amber)!important}
+.halo{stroke:var(--red)}
+.pinG path{fill:var(--green)}
+.zoom button{border-radius:10px;color:var(--green)}
+.halltabs button{border-radius:8px}
+.halltabs button.on{background:var(--green);color:#fff}
+.ent rect{fill:var(--ink)}
+.compass{border-radius:10px}
+.info{border-top-left-radius:16px;border-top-right-radius:16px}
+.badge{border-radius:10px}
+.where{background:#f3ead9;border-radius:10px;color:var(--ink)}
+.where button{border-radius:6px}
+.btn{border-radius:10px;background:var(--paper);border:1px solid var(--line);color:var(--ink)}
+.btn.pri{background:var(--green);color:#fff;border-color:var(--green)}
+.btn.gold{background:var(--amber);color:var(--ink);border-color:var(--amber)}
+.btn.way{background:var(--red)!important;color:#fff!important;border-color:var(--red)}
+.vi{border:1px solid var(--line);box-shadow:none;border-radius:10px}
+.vi.done .n{background:var(--green)}
+.vh{color:var(--green);font-size:1.3rem}
+.toast{background:var(--ink);border-radius:10px}
+.bintro{background:#f3ead9;border-radius:10px}
+.bform{border:1px solid var(--line);box-shadow:none;border-radius:10px;background:var(--card)}
+.bform input{border-radius:8px;background:#fff}
+.bform input:focus{border-color:var(--green)}
+.bk{border:1px solid var(--line);box-shadow:none;border-radius:10px;background:var(--card)}
+.bk .ck{border-color:var(--line)}
+.bk.done .ck{background:var(--green);border-color:var(--green)}
+.bk .lib,.vi .bks{background:#e7efe9;color:var(--green)}
+.vi .bks{background:none}
+.mynotes{background:#f3ead9;border-radius:10px}
+.mynotes input,.mynotes textarea{border-color:var(--line);border-radius:8px}
+.mynotes .mini{background:var(--green);border-radius:8px}
+.wayf{background:#e7efe9;border-radius:10px}
+.wayf input{border-color:#b9cfc8;border-radius:8px}
+.wayf .mini{background:var(--green);border-radius:8px}
+.wayf .mini.ghost{background:#fff;color:var(--green);border-color:#b9cfc8}
+.wayf .res{color:var(--green)}
+.route{stroke:var(--green)}
+.youdot{fill:var(--red)}
+.youpulse{stroke:var(--red)}
+.youlbl{fill:var(--red);font-family:URW,sans-serif}
+.bt .num,.bt .nm,.ent text{font-family:URW,sans-serif}
+.picking .viewport{outline-color:var(--red)}
+.modal{background:rgba(32,59,53,.5)}
+.mbox{border-radius:12px}
+.mbox h3{color:var(--green)}
+/* high contrast keeps priority */
+body.hc{--paper:#fff;--card:#fff;--ink:#000;--muted:#1b1b1b;--line:#000;--green:#00463f;--red:#8a0000}
+body.hc .topstrip{background:#000}
+body.hc .chip.on,body.hc .halltabs button.on,body.hc .dock button,body.hc .surprise,body.hc .discover,body.hc .dock button#booksDock{background:#000;color:#fff}
+
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 <div class="wrap">
+  <div class="topstrip"><img src="brand/nccal-logo-white.png" alt="المجلس الوطني للثقافة والفنون والآداب"><span>المجلس الوطني للثقافة والفنون والآداب<br>معرض الكويت الدولي للكتاب 49 · 18 إلى 28 نوفمبر 2026</span></div>
   <div class="a11y" role="toolbar" aria-label="إعدادات العرض">
     <button id="fsBtn" aria-label="تكبير الخط"><b>أ</b><b style="font-size:1.2em">أ</b> حجم الخط</button>
     <button id="hcBtn" aria-pressed="false">◐ وضوح عالي</button>
   </div>
-  <header class="hero"><div class="deco" aria-hidden="true" style="top:-46px"><span>📚</span><span>✏️</span><span>⭐</span></div>
+  <header class="hero">
     <div class="brand">
-      <div class="logo" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><path d="M9 9.5h6M9 12h4"/></svg>
-      </div>
+      <img class="fairlogo" src="brand/fair-logo.png" alt="شعار معرض الكويت الدولي للكتاب">
       <div>
+        <div class="kicker"><span class="dia" aria-hidden="true"><i></i><i></i></span>معرض الكويت الدولي للكتاب 49</div>
         <h1>دليل</h1>
-        <p class="sub">دليلك لأي مكتبة في معرض الكويت الدولي للكتاب — للكبار والصغار</p>
+        <p class="sub">دليلك لأي مكتبة في المعرض، للكبار والصغار</p>
       </div>
     </div>
     <div class="stats" id="stats"></div>
@@ -389,6 +522,7 @@ body.hc .discover,body.hc .dock button#booksDock{background:#000;color:#fff}
   <button class="more" id="more" hidden>عرض المزيد</button>
 
   <footer>
+    <div class="foot-logos"><img src="brand/nccal-logo.svg" alt="المجلس الوطني للثقافة والفنون والآداب"><img src="brand/fair-logo-full.png" alt="معرض الكويت الدولي للكتاب"></div>
     الخرائط مرسومة من مخططات وقوائم الأجنحة المعلنة لمعرض الكويت الدولي للكتاب.<br>
     قد تتغيّر بعض الأجنحة أثناء المعرض — تأكد من اللوحات في القاعة.
   </footer>
@@ -460,12 +594,12 @@ const HALL_EMO={h5:'📚',h6:'📖',h7:'🏛️',kids:'🧸'};
 const FLAGS={'الكويت':'🇰🇼','السعودية':'🇸🇦','الإمارات':'🇦🇪','قطر':'🇶🇦','البحرين':'🇧🇭','عمان':'🇴🇲','اليمن':'🇾🇪','العراق':'🇮🇶','مصر':'🇪🇬','سوريا':'🇸🇾','لبنان':'🇱🇧','الأردن':'🇯🇴','فلسطين':'🇵🇸','السودان':'🇸🇩','ليبيا':'🇱🇾','تونس':'🇹🇳','الجزائر':'🇩🇿','المغرب':'🇲🇦','موريتانيا':'🇲🇷','تركيا':'🇹🇷','بريطانيا':'🇬🇧','أمريكا':'🇺🇸','كندا':'🇨🇦','فرنسا':'🇫🇷','إيطاليا':'🇮🇹','إسبانيا':'🇪🇸','ألمانيا':'🇩🇪','السويد':'🇸🇪','بلغاريا':'🇧🇬','الصين':'🇨🇳','الهند':'🇮🇳','ماليزيا':'🇲🇾','سنغافورة':'🇸🇬','أستراليا':'🇦🇺'};
 // colour families by region
 const REG=[
- {k:'kw',n:'الكويت',f:'#d3f6f1',s:'#12b5a5',t:'#0b5c54',c:['الكويت']},
- {k:'ar',n:'الجزيرة العربية',f:'#fff0c2',s:'#f4a300',t:'#7a4f00',c:['السعودية','الإمارات','قطر','البحرين','عمان','اليمن']},
- {k:'lv',n:'الشام والعراق',f:'#efe3ff',s:'#9b5cff',t:'#4b1fa0',c:['سوريا','لبنان','الأردن','فلسطين','العراق']},
- {k:'eg',n:'مصر والسودان',f:'#ffe0dc',s:'#ff5d4f',t:'#8a1d12',c:['مصر','السودان']},
- {k:'mg',n:'المغرب العربي',f:'#dcebff',s:'#2f80ff',t:'#0f3e8c',c:['تونس','الجزائر','المغرب','ليبيا','موريتانيا']},
- {k:'wd',n:'من العالم',f:'#e9ecf3',s:'#6f7c95',t:'#2e3648',c:[]}];
+ {k:'kw',n:'الكويت',f:'#d6e6e1',s:'#2c645b',t:'#203b35',c:['الكويت']},
+ {k:'ar',n:'الجزيرة العربية',f:'#f7e4c3',s:'#e8a24a',t:'#6e4510',c:['السعودية','الإمارات','قطر','البحرين','عمان','اليمن']},
+ {k:'lv',n:'الشام والعراق',f:'#d9e3e9',s:'#2d4f63',t:'#1b3242',c:['سوريا','لبنان','الأردن','فلسطين','العراق']},
+ {k:'eg',n:'مصر والسودان',f:'#f5d8d3',s:'#c9382a',t:'#7a1d14',c:['مصر','السودان']},
+ {k:'mg',n:'المغرب العربي',f:'#efe0c9',s:'#986726',t:'#5a3a12',c:['تونس','الجزائر','المغرب','ليبيا','موريتانيا']},
+ {k:'wd',n:'من العالم',f:'#e9e5dc',s:'#59675c',t:'#2f3a33',c:[]}];
 const regOf=c=>REG.find(r=>r.c.includes(c))||REG[5];
 const ALIAS={'Oxford University Press':'اكسفورد','National Geographic':'ناشيونال جيوغرافيك','SCHOLASTIC':'سكولاستك','Macmillan':'ماكميلان','Harvard Press':'هارفارد','Collins':'كولينز','Hachette':'هاشيت','NOSY CROW':'نوزي كرو','Goodword Books':'جود ورد','WHSmith':'سميث','Pinnacle Booksales':'بيناكل','Dorling Kindersley':'دورلنج','Usborne':'اسبورن','Walker Books':'ووكر','Penguin Group':'بنجوين بطريق','Thames & Hudson':'تيمز هدسون','THE ENGLISH BOOKSHOP':'انجلش بوك شوب','Kotopia':'كوتوبيا','Ali Gator for Publications':'علي جيتور','Akdem Publishing':'اكدم','NOON BOOKS':'نون بوكس','DAKWAH CORNER BOOKSTORE':'دعوة كورنر','Austin Macauley Publishers':'اوستن ماكولي','Learner Circle Pte Ltd':'ليرنر سيركل'};
 
@@ -548,11 +682,11 @@ $('stats').innerHTML=`<span class="stat"><b>${P.length}</b> جهة مشاركة<
 function hallSVG(id,opts={}){
   const h=HM[id],[bx,by,bw,bh]=h.box; const mini=!!opts.mini;
   let s=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="${bx} ${by} ${bw} ${bh}" ${mini?'preserveAspectRatio="xMidYMid meet"':`width="${bw}" height="${bh}"`} id="${mini?'':'mapSvg'}">`;
-  if(!mini) s+=`<defs><pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.6" fill="#e2d6c0"/></pattern></defs>`;
+  if(!mini) s+=`<defs><pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.6" fill="#e4d8c5"/></pattern></defs>`;
   if(FLOOR[id]){const pts=FLOOR[id].map(p=>p.join(',')).join(' ');
     s+=`<polygon class="floor" points="${pts}" stroke-linejoin="round"/>`;
     if(!mini) s+=`<polygon points="${pts}" fill="url(#dots)" opacity=".7"/>`;
-    (OBST[id]||[]).forEach(([cx,cy,r])=>{s+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="#9fb8a2" opacity=".85"/>`});
+    (OBST[id]||[]).forEach(([cx,cy,r])=>{s+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="#b9cfc8" opacity=".9"/>`});
   } else if(CORR[id]){const pts=CORR[id].map(p=>p.join(',')).join(' ');
     s+=`<polyline class="corrEdge" points="${pts}" stroke-width="${mini?150:150}"/><polyline class="corr" points="${pts}" stroke-width="${mini?144:144}"/>`;
     if(!mini) s+=`<polyline points="${pts}" fill="none" stroke="url(#dots)" stroke-width="140" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/>`;
@@ -708,7 +842,7 @@ function renderInfo(opt={}){
      <button class="btn ${on?'gold':'pri'}" id="addV">${on?'★ في قائمة زيارتي':'☆ أضف لقائمة زيارتي'}</button>
      ${canSpeak?'<button class="btn" id="say">🔊 اقرأ لي المكان</button>':''}
      <button class="btn" id="cpy">📋 انسخ الموقع</button>
-     <button class="btn" id="wayBtn" style="background:linear-gradient(120deg,#0fa79a,#3aa0ff);color:#fff">🧭 ودّني لها</button>
+     <button class="btn way" id="wayBtn">🧭 ودّني لها</button>
    </div>${wayHtml(p)}${tourHtml}${notesHtml(p)}`;
 }
 $('info').addEventListener('click',e=>{

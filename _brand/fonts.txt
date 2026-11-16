@@ -1,0 +1,4 @@
+Momken-Regular.otf:              OpenType font data
+URWGeometricArabic-Heavy.ttf:    TrueType Font data, 18 tables, 1st "FFTM", 24 names, Macintosh
+URWGeometricArabic-Medium.ttf:   TrueType Font data, 18 tables, 1st "FFTM", 24 names, Macintosh
+URWGeometricArabic-SemiBold.ttf: TrueType Font data, 18 tables, 1st "FFTM", 24 names, Macintosh

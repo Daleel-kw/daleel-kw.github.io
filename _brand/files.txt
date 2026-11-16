@@ -1,3 +1,8 @@
+fair-1.css:                                        ASCII text, with very long lines (722)
+fair-2.css:                                        ASCII text
+fair-3.css:                                        assembler source, ASCII text
+fair-4.css:                                        Unicode text, UTF-8 text, with very long lines (908), with CRLF, LF line terminators
+fair-5.css:                                        ASCII text, with very long lines (697)
 fair-asset-1-ef6ba310-70f8-4d89-8754-d6acb6912e8c: PNG image data, 2892 x 3942, 8-bit/color RGBA, non-interlaced
 fair-asset-2-9f100615-10d3-42d2-ace2-8170850ce899: PNG image data, 1419 x 1174, 8-bit/color RGBA, non-interlaced
 fair-asset-3-93680bdc-9f81-433f-9007-01bb79bba9d7: PNG image data, 1828 x 1147, 8-bit/color RGBA, non-interlaced
@@ -17,7 +22,7 @@ fair-quote-red-close.png:                          PNG image data, 506 x 759, 8-
 nccal-favicon.svg:                                 SVG Scalable Vector Graphics image, ASCII text, with very long lines (2982)
 nccal-home.html:                                   HTML document, ASCII text, with very long lines (444)
 nccal-logo-color.svg:                              SVG Scalable Vector Graphics image, ASCII text, with very long lines (31459)
-nccal-logo-white.png:                              PNG image data, 1800 x 2200, 8-bit/color RGBA, non-interlaced
+nccal-logo-white.png:                              PNG image data, 1800 x 2200, 8-bit/color RGB, non-interlaced
 nccal-pattern-1.svg:                               SVG Scalable Vector Graphics image, ASCII text
 nccal-reveal-logo.svg:                             SVG Scalable Vector Graphics image, ASCII text, with very long lines (2982)
 nccal-shape-pattern.svg:                           SVG Scalable Vector Graphics image, ASCII text, with very long lines (899)

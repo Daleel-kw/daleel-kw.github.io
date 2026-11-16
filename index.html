@@ -680,6 +680,9 @@ const H=window.HALLS, P=window.PUBS, ENT=window.ENT||{}, CORR=window.CORR||{}, F
 function inPoly(x,y,pg){let c=false;for(let i=0,j=pg.length-1;i<pg.length;j=i++){const [xi,yi]=pg[i],[xj,yj]=pg[j];if(((yi>y)!==(yj>y))&&(x<(xj-xi)*(y-yi)/(yj-yi)+xi))c=!c}return c}
 function polyEdge(x,y,pg){let d=1e9;for(let i=0,j=pg.length-1;i<pg.length;j=i++)d=Math.min(d,distSeg(x,y,pg[j][0],pg[j][1],pg[i][0],pg[i][1]));return d}
 const HM={}; H.forEach(h=>HM[h.id]=h);
+/* عدّاد استخدام بدون بيانات شخصية (GoatCounter): أسماء أحداث فقط، ولا يُرسل نص البحث */
+function tk(n){try{if(window.goatcounter&&goatcounter.count)goatcounter.count({path:n,title:n,event:true})}catch(e){}}
+let tkS=0;function tkSearch(){clearTimeout(tkS);tkS=setTimeout(()=>tk('search'),2500)}
 const HALL_SHORT={h5:'قاعة 5',h6:'قاعة 6',h7:'قاعة 7',kids:'الطفل'};
 const HALL_EMO={h5:'📚',h6:'📖',h7:'🏛️',kids:'🧸'};
 const FLAGS={'الكويت':'🇰🇼','السعودية':'🇸🇦','الإمارات':'🇦🇪','قطر':'🇶🇦','البحرين':'🇧🇭','عمان':'🇴🇲','اليمن':'🇾🇪','العراق':'🇮🇶','مصر':'🇪🇬','سوريا':'🇸🇾','لبنان':'🇱🇧','الأردن':'🇯🇴','فلسطين':'🇵🇸','السودان':'🇸🇩','ليبيا':'🇱🇾','تونس':'🇹🇳','الجزائر':'🇩🇿','المغرب':'🇲🇦','موريتانيا':'🇲🇷','تركيا':'🇹🇷','بريطانيا':'🇬🇧','أمريكا':'🇺🇸','كندا':'🇨🇦','فرنسا':'🇫🇷','إيطاليا':'🇮🇹','إسبانيا':'🇪🇸','ألمانيا':'🇩🇪','السويد':'🇸🇪','بلغاريا':'🇧🇬','الصين':'🇨🇳','الهند':'🇮🇳','ماليزيا':'🇲🇾','سنغافورة':'🇸🇬','أستراليا':'🇦🇺'};
@@ -834,7 +837,7 @@ function card(p,q){
   </div>`;
 }
 function render(){
-  const q=$('q').value; const {res,fuzzy,extra}=search(q);
+  const q=$('q').value; if(q.trim())tkSearch(); const {res,fuzzy,extra}=search(q);
   lastRes=res.filter(p=>(hallF==='all'||p.h===hallF)&&(ctyF==='all'||p.c===ctyF)&&(tagF==='all'||p.tags.includes(tagF)));
   $('count').textContent=lastRes.length?`${lastRes.length} نتيجة`:'';
   $('sortNote').textContent=q.trim()?'':'مرتبة حسب القاعة والجناح';
@@ -853,7 +856,7 @@ $('list').addEventListener('click',e=>{
 $('list').addEventListener('keydown',e=>{if(e.key==='Enter'){const it=e.target.closest('.item');if(it)openMap(+it.dataset.i)}});
 $('rnd').onclick=()=>{const pool=lastRes.length?lastRes:P;openMap(pool[Math.floor(Math.random()*pool.length)].i,{surprise:true})};
 
-function toggleVisit(i){
+function toggleVisit(i){tk('visit-toggle');
   const k=visit.indexOf(i); if(k>-1){visit.splice(k,1);toast('انشالت من قائمة زيارتي')} else {visit.push(i);toast('⭐ انضافت لقائمة زيارتي')}
   saveV(); document.querySelectorAll(`[data-s="${i}"]`).forEach(b=>{const on=visit.includes(i);b.classList.toggle('on',on);b.querySelector('svg').setAttribute('fill',on?'currentColor':'none')});
   const g=document.querySelector(`#mapSvg .bt[data-i="${i}"]`); if(g) g.classList.toggle('v',visit.includes(i));
@@ -893,7 +896,7 @@ function mark(p){
   $('pinWrap').setAttribute('transform',`translate(${p.cx},${p.r[1]-2}) scale(.55)`);
   mk.style.display=''; mk.parentNode.appendChild(mk);
 }
-function openMap(i,opt={}){
+function openMap(i,opt={}){tk(opt&&opt.surprise?'discover':'library-open');
   const p=P[i]; if(way&&way.target!==i) way=null; document.body.classList.remove('picking'); cur=i; lastOpt=opt; const was=$('mapSheet').classList.contains('open');
   $('mapSheet').classList.add('open'); document.body.style.overflow='hidden';
   const sameHall=curHall===p.h; loadHall(p.h); $('mapTitle').textContent=HALL_EMO[p.h]+' '+HM[p.h].name;
@@ -902,6 +905,7 @@ function openMap(i,opt={}){
   try{history.replaceState(null,'','#'+p.h+'-'+p.b)}catch(e){}
 }
 function openHall(id){
+  tk('hall-'+id);
   way=null;document.body.classList.remove('picking');
   $('mapSheet').classList.add('open');document.body.style.overflow='hidden';
   cur=null;loadHall(id);$('mapTitle').textContent=HALL_EMO[id]+' '+HM[id].name;mark(null);
@@ -1051,7 +1055,7 @@ try{books=JSON.parse(localStorage.getItem(LSB)||'[]')||[];notes=JSON.parse(local
 function saveB(){try{localStorage.setItem(LSB,JSON.stringify(books));localStorage.setItem(LSN,JSON.stringify(notes))}catch(e){} updateBooksCnt()}
 function updateBooksCnt(){const left=books.filter(b=>!b.d).length;$('booksCnt').textContent=left;}
 const booksAt=p=>books.filter(b=>b.k===keyOf(p));
-function addBook(t,a,k){t=(t||'').trim();if(!t)return false;
+function addBook(t,a,k){t=(t||'').trim();if(!t)return false;tk('book-add');
   books.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),t,a:(a||'').trim(),k:k||'',d:false});
   if(k&&BYKEY[k]&&!visit.includes(BYKEY[k].i)){visit.push(BYKEY[k].i);saveV();toast('📚 انضاف الكتاب، وانضافت مكتبته لقائمة زيارتي');}
   else toast('📚 انضاف الكتاب لقائمتك');
@@ -1149,7 +1153,7 @@ function wayHtml(p){if(!way||way.target!==p.i)return'';
     <div class="ct" style="font-size:.82rem;margin-top:6px">اكتب رقم أقرب جناح لك في ${HM[p.h].name}، أو:</div>
     <div class="row2"><button class="mini ghost" id="wayTap">📍 أحدد مكاني على الخريطة</button>${ents}<button class="mini ghost" id="wayCancel">إلغاء</button></div></div>`}
 function clearRoute(){const g=$('routeG');if(g)g.remove()}
-function wayStartAt(src){const p=P[way.target];const h=p.h;way.picking=false;document.body.classList.remove('picking');
+function wayStartAt(src){tk('way');const p=P[way.target];const h=p.h;way.picking=false;document.body.classList.remove('picking');
   if(src.booth&&src.booth.h!==h){toast('حدد مكانك داخل '+HM[h].name);return}
   if(src.booth&&src.booth.i===p.i){toast('أنت واقف عندها 😄');return}
   const starts=src.booth?boothCells(h,src.booth):pointCells(h,src.pt);const goals=boothCells(h,p);
@@ -1183,6 +1187,7 @@ const b64d=str=>decodeURIComponent(escape(atob(str.replace(/-/g,'+').replace(/_/
 function shareLink(withBooks){const data={v:visit.map(i=>keyOf(P[i]))};if(withBooks)data.b=books.filter(b=>!b.d).map(b=>[b.t,b.a,b.k]);return PUBLIC_URL+'#s-'+b64e(JSON.stringify(data))}
 function doShare(withBooks,title){if(!(visit.length||(withBooks&&books.length))){toast('القائمة فاضية');return}
   const url=shareLink(withBooks);const text=title+' — افتح الرابط وتطلع لك القائمة في «دليل»';
+  tk('share');
   if(navigator.share){navigator.share({title:'دليل',text,url}).catch(()=>{})}
   else copyText(text+'\n'+url,'انتسخ رابط القائمة ✓ أرسله لمن تبي');}
 $('shareList').onclick=()=>doShare(true,'📍 قائمة زيارتي في معرض الكتاب');
@@ -1204,6 +1209,7 @@ function openShared(code){let d;try{d=JSON.parse(b64d(code))}catch(e){toast('ا�
 const standalone=window.matchMedia&&matchMedia('(display-mode: standalone)').matches||navigator.standalone;
 if('serviceWorker' in navigator&&location.protocol==='https:'&&/github\.io$/.test(location.hostname)){try{navigator.serviceWorker.register('sw.js').catch(()=>{})}catch(e){}}
 let deferredPrompt=null;
+window.addEventListener('appinstalled',()=>tk('installed'));
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;showInstall()});
 function showInstall(){let off=false;try{off=localStorage.getItem('daleel-install-off')==='1'}catch(e){}
   if(standalone||off||!/github\.io$/.test(location.hostname))return;
@@ -1250,5 +1256,6 @@ const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.targ
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 })();
 </script>
+<script data-goatcounter="https://daleel-kw.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 // دليل — offline support
-const V='daleel-v9';
+const V='daleel-v10';
 const CORE=['./','index.html','data.js','manifest.webmanifest','icon-192.png','icon-512.png','icon-180.png','brand/fair-logo.png','brand/fair-logo-full.png','brand/nccal-logo.svg','brand/nccal-logo-white.png','fonts/Momken-Regular.otf','fonts/URWGeometricArabic-Medium.ttf','fonts/URWGeometricArabic-SemiBold.ttf','fonts/URWGeometricArabic-Heavy.ttf'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(V).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==V).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});

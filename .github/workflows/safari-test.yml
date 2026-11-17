@@ -1,0 +1,16 @@
+name: safari-test
+on: workflow_dispatch
+permissions: {contents: write}
+jobs:
+  t:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          npm i playwright@1 >/dev/null 2>&1 && npx playwright install webkit >/dev/null 2>&1
+          python3 -m http.server 8000 >/dev/null 2>&1 &
+          sleep 2
+          node _t/s.js
+      - run: |
+          git config user.name daleel-bot; git config user.email actions@users.noreply.github.com
+          git add _t/*.png _t/errors.txt && git commit -m "safari shots" && git push

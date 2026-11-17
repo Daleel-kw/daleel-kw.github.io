@@ -1,2 +1,0 @@
-search: locator.scrollIntoViewIfNeeded: Element is not attached to the DOM
-visit: locator.click: Timeout 5000ms exceeded.

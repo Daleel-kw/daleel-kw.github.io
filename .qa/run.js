@@ -23,6 +23,7 @@ for(const [eng,channel,dev,name] of CFG){const R={errors:[],failed:[],overflow:[
  await p.goto('http://localhost:8000/index.html');await p.waitForTimeout(3000);
  R.fonts=await p.evaluate(async()=>{await document.fonts.ready;return [...document.fonts].map(f=>f.family.replace(/"/g,'')+'/'+f.weight+':'+f.status).join(' ')});
  await step('home',async()=>{});
+ await step('scrolled',async()=>{await p.evaluate(()=>scrollTo(0,innerHeight*.9))});
  await step('halls',async()=>{await p.locator('#halls').scrollIntoViewIfNeeded()});
  await step('list',async()=>{await p.locator('#q').scrollIntoViewIfNeeded();await p.evaluate(()=>scrollBy(0,-20))});
  await step('footer',async()=>{await p.evaluate(()=>scrollTo(0,document.documentElement.scrollHeight))});
@@ -30,6 +31,7 @@ for(const [eng,channel,dev,name] of CFG){const R={errors:[],failed:[],overflow:[
  await step('search',async()=>{await top();await p.fill('#q','جرير');await p.locator('#q').press('Enter');await p.waitForTimeout(600);await p.locator('#list .item').first().scrollIntoViewIfNeeded()});
  await step('library',async()=>{await p.locator('#list .item').first().click({timeout:6000})});
  await step('way',async()=>{await p.locator('#wayBtn').click({timeout:6000})});
+ await step('way-cancel',async()=>{await p.locator('#wayCancel').click({timeout:6000})});
  await close();
  await step('discover',async()=>{await top();await p.locator('#rnd').click({timeout:6000})});await close();
  await step('visit',async()=>{await p.fill('#q','');await p.locator('#q').press('Enter');await p.waitForTimeout(500);await p.locator('#list .star').nth(0).click();await p.locator('#list .star').nth(1).click();await p.waitForTimeout(400);await p.locator('#dockBtn').click({timeout:6000})});await close();

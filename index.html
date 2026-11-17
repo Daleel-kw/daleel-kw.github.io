@@ -527,7 +527,7 @@ html,body{overflow-x:clip}
 #bgfx,#fxTop{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none}
 #fxTop{z-index:45}
 .wrap{position:relative;z-index:1}
-body.hc #bgfx,body.hc #fxTop,body.hc .ticker,body.hc .ghost{display:none}
+body.hc #bgfx,body.hc #fxTop,body.hc .ticker,body.hc .gword{display:none}
 body.hc *{animation:none!important}
 /* شريط «نقرأ ونرتقي» المتحرك */
 .ticker{margin:0 calc(50% - 50vw);background:var(--green);color:var(--cream2);overflow:hidden;white-space:nowrap;position:relative;z-index:2;border-block:0;direction:ltr}
@@ -545,12 +545,12 @@ body.hc *{animation:none!important}
 .band::after{bottom:0;transform:scaleY(-1)}
 .band .sect{margin-top:4px;position:relative;z-index:1}
 .band .sect::after{background:#c9bba0}
-.ghost{position:absolute;font-family:Momken,serif;font-size:9rem;line-height:1;color:var(--gold);opacity:.22;pointer-events:none;white-space:nowrap;z-index:0;will-change:transform}
-.band .ghost{top:6px;inset-inline-end:-10px}
+.gword{position:absolute;font-family:Momken,serif;font-size:9rem;line-height:1;color:var(--gold);opacity:.22;pointer-events:none;white-space:nowrap;z-index:0;will-change:transform}
+.band .gword{top:6px;inset-inline-end:-10px}
 .halls{position:relative;z-index:1}
-.ghost.g2{color:var(--green);opacity:.1;font-size:7.5rem}
+.gword.g2{color:var(--green);opacity:.1;font-size:7.5rem}
 .zone{position:relative}
-.zone .ghost{top:-34px;inset-inline-start:-20px}
+.zone .gword{top:-34px;inset-inline-start:-20px}
 /* ظهور الأقسام عند التمرير */
 .rv{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
 .rv.in{opacity:1;transform:none}
@@ -563,6 +563,13 @@ body.hc .hallcard{border:3px solid #000!important}
 body.hc .chip.on,body.hc .halltabs button.on,body.hc .dock button,body.hc .surprise,body.hc .discover,body.hc .dock button#booksDock{background:#000;color:#fff}
 
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* الشريط السفلي: حجم ثابت معقول حتى مع تكبير الخط، ويختفي وقت ما تكون أزرار الواجهة ظاهرة عشان ما يغطيها */
+.dock button{white-space:nowrap;font-size:16px;padding:11px 16px}
+html.fs2 .dock button,html.fs3 .dock button{font-size:18px}
+.dock .cnt{font-size:15px}
+.dock{transition:opacity .3s,transform .3s}
+body.herocta .dock{opacity:0;transform:translateY(130%);pointer-events:none}
+body.herocta .dock button{pointer-events:none}
 </style>
 </head>
 <body>
@@ -588,12 +595,12 @@ body.hc .chip.on,body.hc .halltabs button.on,body.hc .dock button,body.hc .surpr
   </header>
   <div class="ticker" aria-hidden="true"><div class="tk"><i></i><span>نقرأ ونرتقي</span><i class="r"></i><span>دليل</span><i></i><span>معرض الكويت الدولي للكتاب 49</span><i class="r"></i><span>كل مكتبة بضغطة</span><i></i><span>نقرأ ونرتقي</span><i class="r"></i><span>دليل</span><i></i><span>معرض الكويت الدولي للكتاب 49</span><i class="r"></i><span>كل مكتبة بضغطة</span><i></i><span>نقرأ ونرتقي</span><i class="r"></i><span>دليل</span><i></i><span>معرض الكويت الدولي للكتاب 49</span><i class="r"></i><span>كل مكتبة بضغطة</span><i></i><span>نقرأ ونرتقي</span><i class="r"></i><span>دليل</span><i></i><span>معرض الكويت الدولي للكتاب 49</span><i class="r"></i><span>كل مكتبة بضغطة</span></div></div>
 
-  <section class="band"><span class="ghost" aria-hidden="true" data-par=".18">نقرأ</span>
+  <section class="band"><span class="gword" aria-hidden="true" data-par=".18">نقرأ</span>
   <div class="sect rv"><span class="dia2" aria-hidden="true"><i></i><i></i></span>اختر قاعة وتجول فيها</div>
   <div class="halls" id="halls"></div>
   </section>
 
-  <div class="zone"><span class="ghost g2" aria-hidden="true" data-par="-.12">ونرتقي</span>
+  <div class="zone"><span class="gword g2" aria-hidden="true" data-par="-.12">ونرتقي</span>
   <div class="sect rv"><span class="dia2" aria-hidden="true"><i></i><i></i></span>أو ابحث مباشرة</div></div>
   <div class="searchbox">
     <div class="field">
@@ -1246,7 +1253,7 @@ function frame(){ctx.clearRect(0,0,W,H);
   tx.clearRect(0,0,W,H);bursts=bursts.filter(b=>b.life>0);for(const b of bursts){b.life-=1;b.x+=b.vx;b.y+=b.vy;b.vy+=.12;b.r+=.08;tx.save();tx.globalAlpha=Math.max(0,b.life/50);tx.fillStyle=b.c;tx.translate(b.x,b.y);tx.rotate(b.r);dia(0,0,b.s,tx);tx.restore()}
   if(!document.hidden&&!document.body.classList.contains('hc')) requestAnimationFrame(frame); else setTimeout(()=>requestAnimationFrame(frame),500)}
 addEventListener('resize',()=>{size()});
-addEventListener('scroll',()=>{sy=scrollY;document.querySelectorAll('.ghost[data-par]').forEach(g=>{const r=g.parentElement.getBoundingClientRect();g.style.transform=`translateX(${(r.top-innerHeight/2)*parseFloat(g.dataset.par)}px)`})},{passive:true});
+addEventListener('scroll',()=>{sy=scrollY;document.querySelectorAll('.gword[data-par]').forEach(g=>{const r=g.parentElement.getBoundingClientRect();g.style.transform=`translateX(${(r.top-innerHeight/2)*parseFloat(g.dataset.par)}px)`})},{passive:true});
 /* لمسة على أي مكان فاضي = نثرة معيّنات بألوان المعرض */
 addEventListener('pointerdown',e=>{if(RM||e.target.closest('button,input,textarea,a,.item,.hallcard,.sheet,.field,.chips,.dock,.modal'))return;
   for(let i=0;i<10;i++){const a=Math.random()*6.28,v=2+Math.random()*3.5;bursts.push({x:e.clientX,y:e.clientY,vx:Math.cos(a)*v,vy:Math.sin(a)*v-2,s:4+Math.random()*5,c:COL[i%3],r:a,life:50})}},{passive:true});
@@ -1257,5 +1264,9 @@ document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 })();
 </script>
 <script data-goatcounter="https://daleel-kw.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+<script>
+(function(){const b=document.getElementById('rnd');if(!b||!('IntersectionObserver' in window))return;const box=b.parentElement;
+new IntersectionObserver(es=>{document.body.classList.toggle('herocta',es[0].isIntersecting)},{threshold:0}).observe(box)})();
+</script>
 </body>
 </html>

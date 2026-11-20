@@ -23,6 +23,7 @@ for(const [eng,channel,dev,name] of CFG){const R={errors:[],failed:[],overflow:[
  await p.goto('http://localhost:8000/index.html');await p.waitForTimeout(3000);
  R.fonts=await p.evaluate(async()=>{await document.fonts.ready;return [...document.fonts].map(f=>f.family.replace(/"/g,'')+'/'+f.weight+':'+f.status).join(' ')});
  await step('home',async()=>{});
+ R.install=await p.evaluate(()=>{const e=document.getElementById('install');return e&&!e.hidden?e.innerText.slice(0,80):'hidden'});
  await step('scrolled',async()=>{await p.evaluate(()=>scrollTo(0,innerHeight*.9))});
  await step('halls',async()=>{await p.locator('#halls').scrollIntoViewIfNeeded()});
  await step('list',async()=>{await p.locator('#q').scrollIntoViewIfNeeded();await p.evaluate(()=>scrollBy(0,-20))});
